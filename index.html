@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Rompao</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Intro cinematográfica -->
+    <div id="intro">
+        <div class="intro-content">
+            <h1 class="intro-title">ROMPAO</h1>
+            <p class="intro-subtitle">Photographer & Filmmaker</p>
+        </div>
+        <audio id="intro-sound" src="audio/film_projector.mp3"></audio>
+    </div>
+
+    <!-- Navegación -->
+    <nav id="navbar">
+        <a href="#inicio" class="nav-link">Inicio</a>
+        <a href="#fotos" class="nav-link">Fotos</a>
+        <a href="#videos" class="nav-link">Videos</a>
+        <a href="#contacto" class="nav-link">Contacto</a>
+    </nav>
+
+    <!-- Sección Inicio -->
+    <section id="inicio" class="section">
+        <div class="container">
+            <img src="img/perfil.jpg" alt="Rompao" class="perfil-img">
+            <h1>Rompao</h1>
+            <p class="bio">Fotógrafo y filmmaker especializado en capturar momentos únicos con un estilo cinematográfico auténtico.</p>
+        </div>
+    </section>
+
+    <!-- Sección Fotos -->
+    <section id="fotos" class="section">
+        <h2>Fotos</h2>
+        <div class="subsecciones">
+            <button onclick="mostrarSubseccion('retratos')">Retratos</button>
+            <button onclick="mostrarSubseccion('deportivas')">Deportivas</button>
+            <button onclick="mostrarSubseccion('callejeras')">Callejeras</button>
+        </div>
+
+        <div id="retratos" class="galeria">
+            <div class="polaroid">
+                <img src="img/retratos/1.jpg" alt="Retrato 1">
+                <p>Retrato 1</p>
+            </div>
+            <div class="polaroid">
+                <img src="img/retratos/2.jpg" alt="Retrato 2">
+                <p>Retrato 2</p>
+            </div>
+        </div>
+
+        <div id="deportivas" class="galeria oculto">
+            <div class="polaroid">
+                <img src="img/deportivas/1.jpg" alt="Deporte 1">
+                <p>Acción 1</p>
+            </div>
+        </div>
+
+        <div id="callejeras" class="galeria oculto">
+            <div class="polaroid">
+                <img src="img/callejeras/1.jpg" alt="Calle 1">
+                <p>Street 1</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Videos -->
+    <section id="videos" class="section">
+        <h2>Videos</h2>
+        <div class="subsecciones">
+            <button onclick="mostrarSubseccion('videoclips')">Videoclips</button>
+            <button onclick="mostrarSubseccion('comercial')">Comercial</button>
+        </div>
+
+        <div id="videoclips" class="video-galeria">
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+                <p>Videoclip 1</p>
+            </div>
+        </div>
+
+        <div id="comercial" class="video-galeria oculto">
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+                <p>Comercial 1</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section id="contacto" class="section">
+        <h2>Contacto</h2>
+        <div class="contacto-info">
+            <p>📧 Email: <a href="mailto:tu@email.com">tu@email.com</a></p>
+            <div class="social-links">
+                <a href="https://instagram.com/tu_usuario" target="_blank">Instagram</a>
+                <a href="https://twitter.com/tu_usuario" target="_blank">Twitter</a>
+                <a href="https://youtube.com/@tu_canal" target="_blank">YouTube</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Rompao | Todos los derechos reservados</p>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>
