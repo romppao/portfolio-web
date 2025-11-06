@@ -1,0 +1,53 @@
+name: Minify CSS and JS
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.css'
+      - '**.js'
+  workflow_dispatch:
+
+jobs:
+  minify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          npm install -g csso-cli terser
+
+      - name: Minify CSS files
+        run: |
+          for file in $(find . -name '*.css' ! -name '*.min.css'); do
+            csso $file -o "${file%.css}.min.css"
+            echo "Minified: $file -> ${file%.css}.min.css"
+          done
+
+      - name: Minify JS files
+        run: |
+          for file in $(find . -name '*.js' ! -name '*.min.js' ! -path '*/node_modules/*'); do
+            terser $file -o "${file%.js}.min.js" --compress --mangle
+            echo "Minified: $file -> ${file%.js}.min.js"
+          done
+
+      - name: Commit minified files
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add *.min.css *.min.js 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "chore: add minified CSS and JS files"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
