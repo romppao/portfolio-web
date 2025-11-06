@@ -1,0 +1,44 @@
+name: Optimize Images
+
+on:
+  push:
+    paths:
+      - '**.jpg'
+      - '**.jpeg'
+      - '**.png'
+      - '**.webp'
+  pull_request:
+    paths:
+      - '**.jpg'
+      - '**.jpeg'
+      - '**.png'
+      - '**.webp'
+
+jobs:
+  optimize-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Optimize images
+        uses: calibreapp/image-actions@main
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: true
+          jpegQuality: '85'
+          pngQuality: '85'
+          webpQuality: '85'
+          ignorePaths: 'node_modules/**'
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: 'Optimize images'
+          body: |
+            Optimized images automatically.
+            - Reduced file sizes while maintaining quality
+            - JPEG quality: 85%
+            - PNG quality: 85%
+          branch: optimize-images
+          commit-message: 'chore: optimize images'
