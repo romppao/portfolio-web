@@ -1,0 +1,60 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli
+
+      - name: Run Lighthouse CI
+        run: |
+          lhci autorun --config=lighthouserc.json || lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Lighthouse results
+        uses: actions/upload-artifact@v3
+        with:
+          name: lighthouse-results
+          path: .lighthouseci/
+
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const results = fs.readdirSync('.lighthouseci').filter(f => f.endsWith('.json'));
+            if (results.length > 0) {
+              const data = JSON.parse(fs.readFileSync(`.lighthouseci/${results[0]}`, 'utf8'));
+              const scores = {
+                performance: Math.round(data.categories.performance.score * 100),
+                accessibility: Math.round(data.categories.accessibility.score * 100),
+                'best-practices': Math.round(data.categories['best-practices'].score * 100),
+                seo: Math.round(data.categories.seo.score * 100)
+              };
+              const comment = `## Lighthouse CI Results\n\n| Category | Score |\n|----------|-------|\n| Performance | ${scores.performance} |\n| Accessibility | ${scores.accessibility} |\n| Best Practices | ${scores['best-practices']} |\n| SEO | ${scores.seo} |`;
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            }
