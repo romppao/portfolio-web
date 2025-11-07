@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+  <!-- Background -->
+  <rect width="300" height="300" fill="#1a1a2e"/>
+  <!-- Profile circle background -->
+  <circle cx="150" cy="150" r="140" fill="#0f3460" stroke="#e94560" stroke-width="3"/>
+  <!-- Head -->
+  <circle cx="150" cy="100" r="45" fill="#c9b49a"/>
+  <!-- Body -->
+  <ellipse cx="150" cy="190" rx="50" ry="60" fill="#c9b49a"/>
+  <!-- Shirt -->
+  <path d="M 100 180 L 95 250 L 205 250 L 200 180 Q 150 200 100 180" fill="#2d5a6d"/>
+  <!-- Initials -->
+  <text x="150" y="160" font-size="40" font-weight="bold" fill="#e94560" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif">RP</text>
+</svg>
